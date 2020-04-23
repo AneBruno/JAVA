@@ -1,0 +1,78 @@
+package ej41_tomo1;
+
+public class Empleado {
+	
+	private String nombre;
+	private String apellido;
+	private double cantHs;
+	private double regular;
+	private double hsExceso;
+	private double aCobrar;
+	private double beneficio;
+	
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public String getApellido() {
+		return apellido;
+	}
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+	public double getCantHs() {
+		return cantHs;
+	}
+	public void setCantHs(double cantHs) {
+		this.cantHs = cantHs;
+	}
+	
+	public double getHsExceso() {
+		return hsExceso;
+	}
+	public void setHsExceso(double exceso) {
+		this.hsExceso = exceso;
+	}
+	public double getaCobrar() {
+		
+		double a=((this.getRegular()*25)-((this.getRegular()*25)*0.195));
+		this.setaCobrar(a+(this.getHsExceso()*30)+this.getBeneficio());
+		return aCobrar;
+	}
+	public void setaCobrar(double aCobrar) {
+		this.aCobrar = aCobrar;
+	}	
+	public double getRegular() {
+		return regular;
+	}
+	public void setRegular(double regular) {
+		this.regular = regular;
+	}
+		
+	public double getBeneficio() {
+		return beneficio;
+	}
+	public void setBeneficio(double beneficio) {
+		this.beneficio = beneficio;
+	}
+	
+
+	public Empleado (String nombre, String apellido, double cantHs) {
+		this.setNombre(nombre);
+		this.setApellido(apellido);
+		this.setCantHs(cantHs);
+		if (cantHs>40.00) {
+			this.setRegular(40.00);
+			this.setBeneficio(100.00);
+			this.setHsExceso(cantHs-40.00);
+		}else {
+			this.setHsExceso(0.00);
+			this.setRegular(cantHs);
+			this.setBeneficio(0.00);		
+		}
+	}
+	
+
+}
