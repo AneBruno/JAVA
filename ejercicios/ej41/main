@@ -1,0 +1,71 @@
+package ej41_tomo1;
+
+import java.text.DecimalFormat;
+
+import javax.swing.JOptionPane;
+
+import jdk.nashorn.internal.scripts.JO;
+
+//TOME COMO Q SE CARGAN SOLO 2 EMPLEADOS PARA NO HACERLO MUY LARGO
+public class Ejercicio41 {
+	static String nombre;
+	static String apellido;
+	static double cantHs;
+	static Empleado[] empleados= new Empleado[2];
+	
+	 public static void main(String[] args) {
+		
+		String error="";
+		JOptionPane.showMessageDialog(null, "Carga de empleados",  "BIENVENIDO", JOptionPane.INFORMATION_MESSAGE);
+		for (int i=0; i<2;i++) {
+			try {
+					if(error!=null || i==0) {  //pide carga de datos si es la primera iteración o si hubo un error en las iteraciones previas
+						JOptionPane.showMessageDialog(null, "Ingrese datos del empleado número "+(i+1), "CARGA DE DATOS", JOptionPane.INFORMATION_MESSAGE);
+						cargaDatos();
+						empleados[i]= cargaEmpleados( nombre,  apellido,  cantHs);
+			}}
+			catch(NullPointerException error1){
+				error="Debe ingresar todos los datos";
+				JOptionPane.showMessageDialog(null, error, "ATENCIÓN", JOptionPane.ERROR_MESSAGE);
+				i--;
+			}
+			catch(NumberFormatException error2) {
+				error="Debe ingresar numeros!";
+				JOptionPane.showMessageDialog(null, error, "ATENCIÓN", JOptionPane.ERROR_MESSAGE);
+				i--;
+			}
+		}
+		
+		mostrarEmpleados();
+}
+	
+	public static void cargaDatos() {
+		nombre= JOptionPane.showInputDialog("Ingrese nombre del empleado");
+		apellido= JOptionPane.showInputDialog("Ingrese apellido");
+		cantHs= Double.parseDouble(JOptionPane.showInputDialog("Ingrese cantidad de horas trabajadas"));
+	}
+		
+	public static Empleado cargaEmpleados(String nombre, String apellido, double cantHs) {
+		Empleado emp= new Empleado(nombre, apellido, cantHs);
+		return emp;
+	}
+	
+	public static void mostrarEmpleados() {
+		DecimalFormat formato1 = new DecimalFormat("0.00");
+		System.out.println("LISTADO DE EMPLEADOS:");
+		System.out.println("\n");
+		for (int j=0;j<2;j++) {
+			if (empleados[j] !=null) {
+				System.out.println("Nombre: "+empleados[j].getNombre()+" Apellido: "+empleados[j].getApellido()+
+									"\n Cant de horas trabajadas: "+ empleados[j].getCantHs()+
+									"\n Cant de horas simples: "+ empleados[j].getRegular()+
+									"\n Cant de horas extras: "+ formato1.format(empleados[j].getHsExceso())+
+									"\n Sueldo Basico: $"+ formato1.format((empleados[j].getRegular()*25)+ (empleados[j].getHsExceso()*30))+ //sin dctos ni nada
+									"\n Descuentos: $"+ formato1.format((empleados[j].getRegular()*25)*0.195)+ //Se descuenta un 19.5% solo sobre lo ganado en horas regulares
+									"\n Premio: $"+ formato1.format(empleados[j].getBeneficio())+
+									"\n A cobrar: $"+formato1.format(empleados[j].getaCobrar()));
+									System.out.println("\n");
+		}
+	
+}}
+}
