@@ -1,0 +1,72 @@
+cajaAhorro.addActionListener(accion);
+		cuentaCorriente.addActionListener(accion);
+		//consultarBoton.addActionListener(accion);
+		//transferenciaBoton.addActionListener(accion);
+	}		
+	
+	private static class Accion implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			//double cant,resto;
+			//int nroCuenta,confirmar;
+			if (e.getSource()==cajaAhorro) {
+				tipo="CA";
+				habilitarMenuCuentas();
+			}
+			else if (e.getSource()==cuentaCorriente) {
+				habilitarMenuCuentas();
+				tipo="CC";
+			}
+			/*else if (e.getSource()==consultarBoton) {
+				if (tipo=="CA") {
+					areaTexto.setText("");
+					areaTexto.append("Información de la cuenta nro "+users[i].getNroCajaAhorro());
+					areaTexto.append("\n ");
+					areaTexto.append("\nTipo de cuenta: Caja de Ahorro.");
+					areaTexto.append("\n ");
+					areaTexto.append("\nSaldo disponible: $"+ users[i].getSaldoCajaAhorro());
+				}
+				else if(tipo=="CC"){
+					areaTexto.setText("");
+					areaTexto.append("Información de la cuenta nro "+users[i].getNroCtaCte());
+					areaTexto.append("\n");
+					areaTexto.append("\nTipo de cuenta: Cuenta Corriente.");
+					areaTexto.append("\n");
+					areaTexto.append("\nSaldo disponible: $"+ users[i].getSaldoCtaCte());
+				}
+			}
+			else if (e.getSource()==transferenciaBoton) {
+				areaTexto.setText("");
+				if(tipo=="CA") {
+					areaTexto.append("Transferir desde Caja de Ahorro.");
+					areaTexto.append("\n");
+					areaTexto.append("\nSaldo disponible: $"+ users[i].getSaldoCajaAhorro());
+					cant= Double.parseDouble(JOptionPane.showInputDialog("Ingrese cantidad de dinero a transferir"));
+					if (cant< Double.parseDouble(users[i].getSaldoCajaAhorro())) {
+						nroCuenta=Integer.parseInt(JOptionPane.showInputDialog("Ingrese número de cuenta a la que desea transferir dinero."));
+						confirmar= JOptionPane.showConfirmDialog(null, "Desea transferir $"+cant+" a la cuenta nro: "+nroCuenta, "Confirme transacción", JOptionPane.YES_NO_OPTION);
+						if(confirmar==0) {
+							JOptionPane.showMessageDialog(null, "Transaccion exitosa");
+							resto= Double.parseDouble(users[i].getSaldoCajaAhorro())- cant;
+							users[i].setSaldoCajaAhorro(String.valueOf(resto));
+							areaTexto.append("\nSaldo actualizado: $"+users[i].getSaldoCajaAhorro());
+						}
+				}
+			}else if (tipo=="CC"){
+				areaTexto.append("Transferir desde Cuenta Corriente.");
+				areaTexto.append("\n");
+				areaTexto.append("\nSaldo disponible: $"+ users[i].getSaldoCtaCte()());
+				cant= Double.parseDouble(JOptionPane.showInputDialog("Ingrese cantidad de dinero a transferir"));
+				if (cant< Double.parseDouble(users[i].getSaldoCtaCte())) {
+					nroCuenta=Integer.parseInt(JOptionPane.showInputDialog("Ingrese número de cuenta a la que desea transferir dinero."));
+					confirmar= JOptionPane.showConfirmDialog(null, "Desea transferir $"+cant+" a la cuenta nro: "+nroCuenta, "Confirme transacción", JOptionPane.YES_NO_OPTION);
+					if(confirmar==0) {
+						JOptionPane.showMessageDialog(null, "Transaccion exitosa");
+						resto= Double.parseDouble(users[i].getSaldoCtaCte())- cant;
+						users[i].setSaldoCtaCte(String.valueOf(resto));
+						areaTexto.append("\nSaldo actualizado: $"+users[i].getSaldoCtaCte()());
+					}
+			}
+		}
+	}*/}}
