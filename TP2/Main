@@ -1,0 +1,19 @@
+package Tp2_teoria;
+
+import java.awt.*;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+
+public class Main {
+	static Usuario[] usuarios;
+	
+	public static void main(String[] args) {
+		usuarios= Usuario.inicializarUsuarios();
+		Pantalla.setUsuarios(usuarios);
+		Pantalla.pantalla();
+	
+	
+	}
+}
