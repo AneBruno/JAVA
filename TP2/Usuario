@@ -1,0 +1,82 @@
+package Tp2_teoria;
+
+import javax.swing.JOptionPane;
+
+public class Usuario {
+
+	 String user;
+	 String pswd;
+	 String nroCajaAhorro;
+	 String saldoCajaAhorro;
+	 String nroCtaCte;
+	 String saldoCtaCte;
+	
+	public String getUser() {
+		return user;
+	}
+
+	public void setUser(String user) {
+		this.user = user;
+	}
+
+	public String getPswd() {
+		return pswd;
+	}
+
+	public void setPswd(String pswd) {
+		this.pswd = pswd;
+	}
+
+	public String getNroCajaAhorro() {
+		return nroCajaAhorro;
+	}
+
+	public void setNroCajaAhorro(String nroCajaAhorro) {
+		this.nroCajaAhorro = nroCajaAhorro;
+	}
+
+	public String getSaldoCajaAhorro() {
+		return saldoCajaAhorro;
+	}
+
+	public void setSaldoCajaAhorro(String saldoCajaAhorro) {
+		this.saldoCajaAhorro = saldoCajaAhorro;
+	}
+
+	public String getNroCtaCte() {
+		return nroCtaCte;
+	}
+
+	public void setNroCtaCte(String nroCtaCte) {
+		this.nroCtaCte = nroCtaCte;
+	}
+
+	public String getSaldoCtaCte() {
+		return saldoCtaCte;
+	}
+
+	public void setSaldoCtaCte(String saldoCtaCte) {
+		this.saldoCtaCte = saldoCtaCte;
+	}
+
+		
+	public Usuario (String usuario, String password, String nroCajaAhorro, String saldoCajaAhorro, String nroCtaCte, String saldoCtaCte) {
+		
+		this.setUser(usuario);
+		this.setPswd(password);
+		this.setNroCajaAhorro(nroCajaAhorro);
+		this.setSaldoCajaAhorro(saldoCajaAhorro);
+		this.setNroCtaCte(nroCtaCte);
+		this.setSaldoCtaCte(saldoCtaCte);
+	}
+	
+	public static Usuario[] inicializarUsuarios() {
+		Usuario[] users= {
+				new Usuario("Usuario1", "passwrd1", "111", "10000","1111","150000"),
+				new Usuario("Usuario2", "passwrd2", "222", "20000","2222","250000"),
+				new Usuario("Usuario3", "passwrd3", "333", "3000","3333","300000"),
+				new Usuario("Usuario4", "passwrd4", "444", "4000","4444","4500")	
+		};
+		return users;
+	}
+}
