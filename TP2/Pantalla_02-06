@@ -1,0 +1,495 @@
+package Tp2_teoria;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.*;
+
+import Tp2_teoria.Prueba.Accion;
+import Tp2_teoria.Prueba.Accion2;
+import jdk.nashorn.internal.objects.annotations.Setter;
+
+
+public abstract  class Pantalla extends JFrame implements ActionListener  {
+
+	private static  JTextField userCampo;
+	private static JPasswordField pswdCampo;
+	private static JLabel userLabel, pswdLabel, titulo;
+	private static JButton boton1, salirBoton;
+	private static JPanel panelUser, panelPswd, panelBoton, panelCentral, panelIzquierdo, panelAbajo;
+	private static JRadioButton consultarBoton,transferenciaBoton, extraccionBoton, depositoBoton, cuentaCorriente, cajaAhorro;
+	private static ButtonGroup radioGroup1, radioGroup2;
+	private static JTextArea areaTexto;
+	private static  Usuario[] users;
+	private static int cont=0, i,index, longi;
+	private static boolean valido, formato;
+	private static String tipo="";
+	
+	public static void pantalla () {
+		
+		JFrame ui= new JFrame("Log in - Banca Comercial S.A.");
+		
+		userLabel = new JLabel("Usuario");
+		userCampo= new JTextField(20);
+		panelUser= new JPanel();
+		panelUser.add(userLabel);
+		panelUser.add(userCampo);
+				
+		pswdLabel= new JLabel("Contraseña");		
+		pswdCampo= new JPasswordField(10);
+		panelPswd= new JPanel();
+		panelPswd.add(pswdLabel);
+		panelPswd.add(pswdCampo);
+		
+		boton1= new JButton("Ingresar");
+		panelBoton= new JPanel();
+		panelBoton.add(boton1);
+		boton1.addActionListener(
+		new ActionListener() {
+			
+			public void actionPerformed (ActionEvent evento) {
+				formato= validarFormato(); //valido con expresiones regulares
+				if(formato==true) {
+					valido= validarIngreso(); //comparo con array de usuarios
+					if(cont<3 && valido==true) {
+						ui.setVisible(false);
+						menuCuenta();
+					}
+					if (valido==false) { //no coincide con usuarios
+						JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
+						userCampo.setText("");
+						pswdCampo.setText("");
+						cont+=1;
+					}
+					if(cont==3) { //intento 3 veces mal
+						bloquearIngreso();
+					}
+			}}
+		});
+		Container contenedor= ui.getContentPane();
+		contenedor.setLayout(new GridLayout(3,2));
+		contenedor.add(panelUser);
+		contenedor.add(panelPswd);
+		contenedor.add(panelBoton);
+		
+		ui.setSize(350,250);
+		ui.setLocationRelativeTo(null);
+		ui.setVisible(true);
+		ui.setDefaultCloseOperation(EXIT_ON_CLOSE);
+	}
+	
+	public static boolean validarFormato() {
+		int formato_usu=1;
+		int formato_pass=1;
+		boolean formato_ok=false;
+		char[] pass= pswdCampo.getPassword();
+		String usu= userCampo.getText();
+		
+		if(usu.equals("")|| String.valueOf(pass).equals("")) {
+			JOptionPane.showMessageDialog(null, "Debe completar ambos campos.", "ATENCIÓN", JOptionPane.ERROR_MESSAGE);
+			userCampo.setText("");
+			pswdCampo.setText("");}
+		else if (!usu.matches("[A-Z][0-9a-zA-Z]*{8,20}")) {
+				JOptionPane.showMessageDialog(null, "El formato del usuario no es válido.", "Atención", JOptionPane.ERROR_MESSAGE);
+				userCampo.setText("");
+				pswdCampo.setText("");
+			} else formato_usu=0;
+		if (!String.valueOf(pass).matches("[0-9a-zA-Z]{8}")) {
+			JOptionPane.showMessageDialog(null, "El formato de la contraseña no es válido.", "Atención", JOptionPane.ERROR_MESSAGE);
+			userCampo.setText("");
+			pswdCampo.setText("");
+		}else formato_pass=0;
+	
+		if(formato_usu==0 && formato_pass==0) {
+			formato_ok=true;
+		}
+		return formato_ok;
+	}
+	
+	public static boolean validarIngreso() {
+		boolean found= false;
+		char[] pass= pswdCampo.getPassword();
+		String usu= userCampo.getText(); 
+		
+		int len= users.length;
+		int i=0;
+		while (i<len && found==false) {
+			if(users[i].getUser().equals(usu) && users[i].getPswd().equals(String.valueOf(pass))) {
+				found=true;
+			}
+			else i++;
+			}
+		return found;
+		}
+		
+	public static void menuCuenta() {
+		
+		JFrame ui_cuenta =new JFrame("Banca Online");
+				
+		cuentaCorriente= new JRadioButton("Cuenta Corriente");
+		cajaAhorro= new JRadioButton("Caja de Ahorro");
+		radioGroup1= new ButtonGroup();
+		radioGroup1.add(cajaAhorro);
+		radioGroup1.add(cuentaCorriente);
+		
+		consultarBoton= new JRadioButton("Consultar saldo");
+		//consultarBoton.setEnabled(false);
+		transferenciaBoton= new JRadioButton("Transferencias");
+		//transferenciaBoton.setEnabled(false);
+		extraccionBoton= new JRadioButton("Extracciones");
+		//extraccionBoton.setEnabled(false);
+		depositoBoton= new JRadioButton("Depósitos");
+		//depositoBoton.setEnabled(false);
+		radioGroup2= new ButtonGroup();
+		radioGroup2.add(consultarBoton);
+		radioGroup2.add(transferenciaBoton);
+		radioGroup2.add(extraccionBoton);
+		radioGroup2.add(depositoBoton);
+		
+		titulo= new JLabel("       Menu Cuentas      ");
+		titulo.setOpaque(true);
+		titulo.setBackground(Color.blue);
+		
+		/*volver= new JLabel("              Volver              ");
+		volver.setOpaque(true);
+		volver.setBackground(Color.white);
+		volver.setEnabled(false);*/
+		
+		salirBoton= new JButton("Cerrar Sesión");
+		
+		panelIzquierdo= new JPanel();
+		panelIzquierdo.setLayout(new BoxLayout(panelIzquierdo, BoxLayout.Y_AXIS));
+		panelIzquierdo.add(titulo);	
+		panelIzquierdo.add(cuentaCorriente);
+		panelIzquierdo.add(cajaAhorro);
+		panelIzquierdo.add(consultarBoton);
+		panelIzquierdo.add(transferenciaBoton);
+		panelIzquierdo.add(extraccionBoton);
+		panelIzquierdo.add(depositoBoton);
+		//panelIzquierdo.add(volver);
+			
+		panelAbajo= new JPanel(new FlowLayout());
+		panelAbajo.add(salirBoton);
+		
+		areaTexto = new JTextArea(15,20);
+		areaTexto.setBackground(Color.white);
+		areaTexto.setEditable(false);
+		panelCentral= new JPanel();
+		panelCentral.add(areaTexto);
+		
+		ui_cuenta.getContentPane().setLayout(new BorderLayout());
+		ui_cuenta.getContentPane().add(panelIzquierdo, BorderLayout.WEST);
+		ui_cuenta.getContentPane().add(panelCentral, BorderLayout.CENTER);
+		ui_cuenta.getContentPane().add(panelAbajo, BorderLayout.SOUTH);
+		
+		ui_cuenta.pack();
+		ui_cuenta.setLocationRelativeTo(null);
+		ui_cuenta.setVisible(true);
+		ui_cuenta.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+		ActionListener accionCA= new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent eCA) {
+				tipo="CA";
+				areaTexto.setText("");
+				//habilitarMenuCuentas();
+				operaciones();
+								
+			}
+		};
+		ActionListener accionCC= new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent eCC) {
+				tipo="CC";
+				areaTexto.setText("");
+				//habilitarMenuCuentas();
+				operaciones();
+			}
+		};
+		
+		cajaAhorro.addActionListener(accionCA);
+		cuentaCorriente.addActionListener(accionCC);
+			
+		/*volver.addMouseListener(new MouseListener() {
+			   public void mouseClicked(MouseEvent m) {
+				   areaTexto.setText("");
+				   radioGroup1.clearSelection();
+				   radioGroup2.clearSelection();
+				   deshabilitarMenuCuentas();
+				   tipo="";
+			   }
+			   public void mouseExited(MouseEvent arg0) {}
+			   public void mouseEntered(MouseEvent arg0) {}
+			   public void mousePressed(MouseEvent arg0) {}
+			   public void mouseReleased(MouseEvent arg0) {}
+			   
+			   });*/
+		
+		salirBoton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ui_cuenta.setVisible(false);
+				JOptionPane.showMessageDialog(null, "Usted ha cerrado sesión.");
+				pantalla();
+				
+			}
+		});
+	}
+		
+	public static void operaciones() {
+		
+		//habilitarMenuCuentas();
+		ActionListener accion1= new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e1) {
+				if (tipo=="CA") {
+					areaTexto.setText("");
+					areaTexto.append("Información de la cuenta nro "+users[i].getNroCajaAhorro());
+					areaTexto.append("\n ");
+					areaTexto.append("\nTipo de cuenta: Caja de Ahorro.");
+					areaTexto.append("\n ");
+					areaTexto.append("\nSaldo disponible: $"+ users[i].getSaldoCajaAhorro());
+				}else if (tipo=="CC") {
+					areaTexto.setText("");
+					areaTexto.setText("Información de la cuenta nro "+users[i].getNroCtaCte());
+					areaTexto.append("\n");
+					areaTexto.append("\nTipo de cuenta: Cuenta Corriente.");
+					areaTexto.append("\n");
+					areaTexto.append("\nSaldo disponible: $"+ users[i].getSaldoCtaCte());
+				}
+			}
+		};
+		ActionListener accion2= new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e2) {
+				double cant,resto,aux;
+				int nroCuenta, confirmar;
+				
+				if (tipo=="CA") {
+					areaTexto.setText("");
+					areaTexto.append("Transferir desde Caja de Ahorro.");
+					areaTexto.append("\n");
+					areaTexto.append("\nSaldo disponible: $"+ users[i].getSaldoCajaAhorro());
+					cant= Double.parseDouble(JOptionPane.showInputDialog("Ingrese cantidad de dinero a transferir"));
+					if (cant<= Double.parseDouble(users[i].getSaldoCajaAhorro())) {
+						nroCuenta=Integer.parseInt(JOptionPane.showInputDialog("Ingrese número de cuenta a la que desea transferir dinero."));
+						if (buscarCuenta(nroCuenta)) {
+							confirmar= JOptionPane.showConfirmDialog(null, "Desea transferir $"+cant+" a la cuenta nro: "+nroCuenta, "Confirme transacción", JOptionPane.YES_NO_OPTION);
+							if(confirmar==0) {
+								JOptionPane.showMessageDialog(null, "Transacción exitosa");
+								resto= Double.parseDouble(users[i].getSaldoCajaAhorro())- cant;
+								users[i].setSaldoCajaAhorro(String.valueOf(resto));
+								areaTexto.append("\nSaldo actualizado: $"+users[i].getSaldoCajaAhorro());
+								if(longi==3) {
+									aux= Double.parseDouble(users[index].getSaldoCajaAhorro())+ cant;
+									users[index].setSaldoCajaAhorro(String.valueOf(aux));
+								}
+								else if (longi==4) {
+									aux= Double.parseDouble(users[index].getSaldoCtaCte())+ cant;
+									users[index].setSaldoCtaCte(String.valueOf(aux));
+							}
+						}
+						}else JOptionPane.showMessageDialog(null, "Cuenta no existente","Error", JOptionPane.ERROR_MESSAGE);
+				}else JOptionPane.showMessageDialog(null, "Saldo en caja insuficiente", "Error", JOptionPane.ERROR_MESSAGE);
+			
+				}
+				else if (tipo=="CC") {
+				areaTexto.setText("");
+				areaTexto.append("Transferir desde Cuenta Corriente.");
+				areaTexto.append("\n");
+				areaTexto.append("\nSaldo disponible: $"+ users[i].getSaldoCtaCte());
+				cant= Double.parseDouble(JOptionPane.showInputDialog("Ingrese cantidad de dinero a transferir"));
+				if (cant<= Double.parseDouble(users[i].getSaldoCtaCte())) {
+					nroCuenta=Integer.parseInt(JOptionPane.showInputDialog("Ingrese número de cuenta a la que desea transferir dinero."));
+					if (buscarCuenta(nroCuenta)) {
+						confirmar= JOptionPane.showConfirmDialog(null, "Desea transferir $"+cant+" a la cuenta nro: "+nroCuenta, "Confirme transacción", JOptionPane.YES_NO_OPTION);
+						if(confirmar==0) {
+							JOptionPane.showMessageDialog(null, "Transacción exitosa");
+							resto= Double.parseDouble(users[i].getSaldoCtaCte())- cant;
+							users[i].setSaldoCtaCte(String.valueOf(resto));
+							areaTexto.append("\n\nSaldo actualizado: $"+users[i].getSaldoCtaCte());
+							if(longi==3) {
+								aux= Double.parseDouble(users[index].getSaldoCajaAhorro())+ cant;
+								users[index].setSaldoCajaAhorro(String.valueOf(aux));
+							}
+							else if (longi==4) {
+								aux= Double.parseDouble(users[index].getSaldoCtaCte())+ cant;
+								users[index].setSaldoCtaCte(String.valueOf(aux));
+							}
+						}
+					}else JOptionPane.showMessageDialog(null, "Cuenta no existente","Error", JOptionPane.ERROR_MESSAGE);
+			}else JOptionPane.showMessageDialog(null, "Saldo en caja insuficiente", "Error", JOptionPane.ERROR_MESSAGE);
+				
+		
+				}
+			tipo="";
+			//radioGroup2.clearSelection();
+			radioGroup1.clearSelection();
+			
+			}
+			
+		};
+		
+		ActionListener accion3= new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e3) {
+				double cant,aux;
+				int confirmar;
+				areaTexto.setText("");
+				
+				if (tipo=="CA" ) {
+					areaTexto.append("Extraer de la cuenta nro "+users[i].getNroCajaAhorro());
+					areaTexto.append("\n");
+					areaTexto.append("\nSaldo disponible: $"+users[i].getSaldoCajaAhorro());
+					areaTexto.append("\n");
+					cant= Double.parseDouble(JOptionPane.showInputDialog("Ingrese monto a extraer"));
+					if (cant<= Double.parseDouble(users[i].getSaldoCajaAhorro())) {
+						confirmar= JOptionPane.showConfirmDialog(null, "Desea extraer $"+cant+" ?","Confirme transacción", JOptionPane.YES_NO_OPTION);
+						if(confirmar==0){
+							aux= Double.parseDouble(users[i].getSaldoCajaAhorro())- cant;
+							users[i].setSaldoCajaAhorro(String.valueOf(aux));
+							JOptionPane.showMessageDialog(null, "Transacción exitosa");
+							areaTexto.append("\nSaldo actualizado: $"+ users[i].getSaldoCajaAhorro());
+						}
+					}else JOptionPane.showMessageDialog(null, "Monto en caja insuficiente");
+					
+					}
+				else if (tipo=="CC" ){
+					areaTexto.append("Extraer de la cuenta nro "+users[i].getNroCtaCte());
+					areaTexto.append("\n");
+					areaTexto.append("\nSaldo disponible: $"+users[i].getSaldoCtaCte());
+					areaTexto.append("\n");
+					cant= Double.parseDouble(JOptionPane.showInputDialog("Ingrese monto a extraer"));
+					if (cant<= Double.parseDouble(users[i].getSaldoCtaCte())) {
+						confirmar= JOptionPane.showConfirmDialog(null, "Desea extraer $"+cant+" ?","Confirme transacción", JOptionPane.YES_NO_OPTION);
+						if(confirmar==0){
+						aux= Double.parseDouble(users[i].getSaldoCtaCte())- cant;
+						users[i].setSaldoCtaCte(String.valueOf(aux));
+						JOptionPane.showMessageDialog(null, "Transacción exitosa");
+						areaTexto.append("\nSaldo actualizado: $"+ users[i].getSaldoCtaCte());
+					}
+				}else JOptionPane.showMessageDialog(null, "Monto en caja insuficiente");
+				
+				}
+				tipo="";
+				radioGroup1.clearSelection();
+				
+		}};
+		ActionListener accion4= new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e4) {
+				double cant,aux;
+				int confirmar;
+				if (tipo=="CA") {
+					areaTexto.setText("");
+					areaTexto.append("Depositar en Caja de Ahorro");
+					areaTexto.append("\n");
+					areaTexto.append("\nSaldo disponible: $"+users[i].getSaldoCajaAhorro());
+					cant=Double.parseDouble(JOptionPane.showInputDialog("Ingrese cantidad a depositar"));
+					if (cant<= Double.parseDouble(users[i].getSaldoCajaAhorro())) {
+						confirmar= JOptionPane.showConfirmDialog(null, "Desea depositar $"+cant+" en esta cuenta", "Confirme transacción", JOptionPane.YES_NO_OPTION);
+						if(confirmar==0) {
+							aux= Double.parseDouble(users[i].getSaldoCajaAhorro())+ cant;
+							users[i].setSaldoCajaAhorro(String.valueOf(aux));
+							JOptionPane.showMessageDialog(null, "Transacción exitosa");
+							areaTexto.append("\nSaldo actualizado: $"+users[i].getSaldoCajaAhorro());
+						}
+					}else JOptionPane.showMessageDialog(null, "Saldo en caja insuficiente", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				else if (tipo=="CC") {
+					areaTexto.setText("");
+					areaTexto.append("Depositar en Cuenta Corriente");
+					areaTexto.append("\n");
+					areaTexto.append("\nSaldo disponible: $"+users[i].getSaldoCtaCte());
+					cant=Double.parseDouble(JOptionPane.showInputDialog("Ingrese cantidad a depositar"));
+					if (cant<= Double.parseDouble(users[i].getSaldoCajaAhorro())) {
+						confirmar= JOptionPane.showConfirmDialog(null, "Desea depositar $"+cant+" en esta cuenta", "Confirme transacción", JOptionPane.YES_NO_OPTION);
+						if(confirmar==0) {
+							aux= Double.parseDouble(users[i].getSaldoCtaCte())+ cant;
+							users[i].setSaldoCtaCte(String.valueOf(aux));
+							JOptionPane.showMessageDialog(null, "Transacción exitosa");
+							areaTexto.append("\nSaldo actualizado: $"+users[i].getSaldoCtaCte());
+						}
+					}else JOptionPane.showMessageDialog(null, "Saldo en cuenta insuficiente", "Error", JOptionPane.ERROR_MESSAGE);
+					
+					}	
+				
+			//radioGroup2.clearSelection();
+			radioGroup1.clearSelection();
+			tipo="";
+			}
+		};
+		
+		consultarBoton.addActionListener(accion1);
+		transferenciaBoton.addActionListener(accion2);
+		extraccionBoton.addActionListener(accion3);
+		depositoBoton.addActionListener(accion4);
+	}
+	
+	
+	public static boolean buscarCuenta(int nroCuenta) {
+		boolean found=false;
+		int j=0;
+		while (j<4 && found==false) {
+			if (users[j].getNroCajaAhorro().equals(String.valueOf(nroCuenta)) || users[j].getNroCtaCte().equals(String.valueOf(nroCuenta))) {
+				found=true;
+			}
+			j++;
+		}
+		j--;
+		index=j;
+		longi=String.valueOf(nroCuenta).length();
+		
+		return found;
+	}
+	
+	/*public static void habilitarMenuCuentas () {
+		cuentaCorriente.setEnabled(false);
+		cajaAhorro.setEnabled(false);
+		consultarBoton.setEnabled(true);
+		transferenciaBoton.setEnabled(true);
+		extraccionBoton.setEnabled(true);
+		depositoBoton.setEnabled(true);
+		volver.setEnabled(true);
+	}*/
+	
+	/*public static void deshabilitarMenuCuentas() {
+		consultarBoton.setEnabled(false);
+		   transferenciaBoton.setEnabled(false);
+		   extraccionBoton.setEnabled(false);
+		   depositoBoton.setEnabled(false);
+		   cajaAhorro.setEnabled(true);
+		   cuentaCorriente.setEnabled(true);
+	}
+	*/
+	public static void bloquearIngreso() {
+		panelUser.setVisible(false);
+		panelPswd.setVisible(false);
+		panelBoton.setVisible(false);
+		
+		JOptionPane.showMessageDialog(null, "Ha intentado ingresar 3 veces.", "ERROR", JOptionPane.ERROR_MESSAGE);
+	}
+
+	public static void setUsuarios(Usuario[] usuarios) {
+		users=usuarios;
+	}
+
+
+}
