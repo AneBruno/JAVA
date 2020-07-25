@@ -63,7 +63,7 @@ public class Menu {
 	}
 
 	private String getCommand() {
-		System.out.println("Ingrese el comando según la opción que desee realizar");
+		System.out.println("Ingrese el comando segÃºn la opciÃ³n que desee realizar");
 		System.out.println("list\t\tlistar todos");
 		System.out.println("find\t\tbuscar por tipo y nro de documento"); //solo debe devolver 1
 		System.out.println("search\t\tlistar por apellido"); //puede devolver varios
@@ -133,7 +133,7 @@ public class Menu {
 		System.out.println("Apellido: ");
 		p.setApellido(s.nextLine());
 		
-		System.out.println("Teléfono: ");
+		System.out.println("TelÃ©fono: ");
 		p.setTel(s.nextLine());
 		
 		System.out.println("Email: ");
@@ -148,7 +148,7 @@ public class Menu {
 		p.setDocumento(doc);
 		
 		System.out.println("ROL: 1- Admin //  2- User : ");
-		rol.setId(Integer.parseInt(s.nextLine())); //adentro del metodo se asignó las descripcion del rol tmbn
+		rol.setId(Integer.parseInt(s.nextLine())); //adentro del metodo se asignÃ³ las descripcion del rol tmbn
 		p.addRol(rol);
 		
 		ctrlLogin.add(p);//creo persona ne base de datos
@@ -184,7 +184,7 @@ public class Menu {
 				System.out.println("Apellido: ");
 				p.setApellido(s.nextLine());
 				
-				System.out.println("Teléfono: ");
+				System.out.println("TelÃ©fono: ");
 				p.setTel(s.nextLine());
 				
 				System.out.println("Email: ");
@@ -198,7 +198,7 @@ public class Menu {
 				
 				ctrlLogin.editPersona(p);
 				
-				System.out.println("Persona actualizada con éxito:");
+				System.out.println("Persona actualizada con Ã©xito:");
 												
 			}
 			else if (ans.equals("2")){
@@ -217,7 +217,7 @@ public class Menu {
 				if(p.hasRol(r)==false) {
 					p.addRol(r);
 					ctrlLogin.setRolPersona(p, r);
-					System.out.println("Rol asignado con éxito");
+					System.out.println("Rol asignado con Ã©xito");
 				}			
 		}
 				
@@ -227,22 +227,22 @@ public class Menu {
 	private void delete() {
 		
 		Persona p= new Persona();
-		HashMap<Integer, Rol> roles= new HashMap<Integer, Rol>();
+		//HashMap<Integer, Rol> roles= new HashMap<Integer, Rol>();
 		System.out.println("Persona a eliminar: ");
 		p= find();
 		while (p==null) {
 			System.out.println("Persona inesxistente. Ingrese datos correctos: ");
 			p=find();
 		}
-		roles= p.getRoles();
+		//roles= p.getRoles();
 		System.out.println("Desea eliminar la persona: ID:"+p.getId()+" -Nombre: "+p.getNombre()+" -Apellido: "+p.getApellido()+"? (si/no)");
 		String rta=s.nextLine();
 		if(rta.equals("si")) {
 			ctrlLogin.removeRolesPersona(p); //borra roles de la persona
 			ctrlLogin.deletePersona(p);
-			System.out.println("Eliminación exitosa.");
+			System.out.println("EliminaciÃ³n exitosa.");
 		}else if (rta.equals("no")) {
-			System.out.println("Eliminación cancelada.");
+			System.out.println("EliminaciÃ³n cancelada.");
 		}
 		
 		
