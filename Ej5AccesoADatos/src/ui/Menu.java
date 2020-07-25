@@ -63,7 +63,7 @@ public class Menu {
 	}
 
 	private String getCommand() {
-		System.out.println("Ingrese el comando segÃºn la opciÃ³n que desee realizar");
+		System.out.println("Ingrese el comando según la opción que desee realizar");
 		System.out.println("list\t\tlistar todos");
 		System.out.println("find\t\tbuscar por tipo y nro de documento"); //solo debe devolver 1
 		System.out.println("search\t\tlistar por apellido"); //puede devolver varios
@@ -133,7 +133,7 @@ public class Menu {
 		System.out.println("Apellido: ");
 		p.setApellido(s.nextLine());
 		
-		System.out.println("TelÃ©fono: ");
+		System.out.println("Teléfono: ");
 		p.setTel(s.nextLine());
 		
 		System.out.println("Email: ");
@@ -148,7 +148,7 @@ public class Menu {
 		p.setDocumento(doc);
 		
 		System.out.println("ROL: 1- Admin //  2- User : ");
-		rol.setId(Integer.parseInt(s.nextLine())); //adentro del metodo se asignÃ³ las descripcion del rol tmbn
+		rol.setId(Integer.parseInt(s.nextLine())); //adentro del metodo se asignó las descripcion del rol tmbn
 		p.addRol(rol);
 		
 		ctrlLogin.add(p);//creo persona ne base de datos
@@ -171,7 +171,6 @@ public class Menu {
 			p=find();
 		}
 
-		//HashMap<Integer, Rol> rol= p.getRoles();	
 		System.out.println("");
 		System.out.println("\n1- Editar datos personales \n2- Editar roles");
 		String ans = s.nextLine();
@@ -184,7 +183,7 @@ public class Menu {
 				System.out.println("Apellido: ");
 				p.setApellido(s.nextLine());
 				
-				System.out.println("TelÃ©fono: ");
+				System.out.println("Teléfono: ");
 				p.setTel(s.nextLine());
 				
 				System.out.println("Email: ");
@@ -198,32 +197,66 @@ public class Menu {
 				
 				ctrlLogin.editPersona(p);
 				
-				System.out.println("Persona actualizada con Ã©xito:");
+				System.out.println("Persona actualizada con éxito:");
 												
 			}
 			else if (ans.equals("2")){
-				System.out.println("ROL: 1- Admin //  2- User : ");
-				r.setId(Integer.parseInt((s.nextLine())));
-				r= ctrlLogin.getById(r);
-				while (r==null) {
-					System.out.println("Rol inexistente, intente de nuevo: ");
-					System.out.println("ROL: 1- Admin //  2- User : ");
-					r.setId(Integer.parseInt((s.nextLine())));
-					r= ctrlLogin.getById(r);
-				}
-				if(p.hasRol(r)==true) {
-					System.out.println("La persona ya tiene este rol asignado.");
-				}
-				if(p.hasRol(r)==false) {
-					p.addRol(r);
-					ctrlLogin.setRolPersona(p, r);
-					System.out.println("Rol asignado con Ã©xito");
+				System.out.println("1-Eliminar rol\n2-Agregar rol");
+				String rt=s.nextLine();
+				if (rt.equals("1")) {
+					deleteRol(p);
+				}else if (rt.equals("2")) {
+					editRol(p);				
 				}			
 		}
 				
 		return p;
 	}
 
+	private void editRol (Persona p) {
+		Rol r =new Rol();
+		System.out.println("Roles actuales de la persona: "+p.getRoles());
+		System.out.println("ROL: 1- Admin //  2- User : ");
+		r.setId(Integer.parseInt((s.nextLine())));
+		r= ctrlLogin.getById(r);
+		while (r==null) {
+			System.out.println("El rol ingresado es inexistente, intente de nuevo: ");
+			System.out.println("ROL: 1- Admin //  2- User : ");
+			r=new Rol();
+			r.setId(Integer.parseInt((s.nextLine())));
+			r= ctrlLogin.getById(r);
+		}
+		if(p.hasRol(r)==true) {
+			System.out.println("La persona ya tiene este rol asignado.");
+		}
+		if(p.hasRol(r)==false) {
+			p.addRol(r);
+			ctrlLogin.setRolPersona(p, r);
+			System.out.println("Rol asignado con éxito");	
+		}
+	}
+	
+	private void deleteRol(Persona p) {
+		Rol r = new Rol();
+		System.out.println("Roles actuales de la persona: "+p.getRoles());
+		System.out.println("Ingrese el id del rol que desea eliminar: ");
+		r.setId(Integer.parseInt(s.nextLine()));
+		r=ctrlLogin.getById(r);
+		while(r==null) {
+			System.out.println("El rol ingresado no existe. Intente de nuevo: ");
+			r=new Rol();
+			r.setId(Integer.parseInt(s.nextLine()));
+			r=ctrlLogin.getById(r);
+		}
+		if (p.hasRol(r)==false) {
+			System.out.println("La persona no tiene este rol asignado."); //no se lo puede eliminar
+		}
+		else {
+			p.removeRol(r);
+			ctrlLogin.removeRolesPersona(p); //asigno rol en tabla rol_persona db
+			System.out.println("Eliminación exitosa.");
+		}
+	}
 	private void delete() {
 		
 		Persona p= new Persona();
@@ -240,9 +273,9 @@ public class Menu {
 		if(rta.equals("si")) {
 			ctrlLogin.removeRolesPersona(p); //borra roles de la persona
 			ctrlLogin.deletePersona(p);
-			System.out.println("EliminaciÃ³n exitosa.");
+			System.out.println("Eliminación exitosa.");
 		}else if (rta.equals("no")) {
-			System.out.println("EliminaciÃ³n cancelada.");
+			System.out.println("Eliminación cancelada.");
 		}
 		
 		
