@@ -60,5 +60,9 @@ public class Login {
 	public void removeRolesPersona(Persona p) {
 		dr.removeRolesPersona(p);
 	}
+	
+	public void removeRolPersona(Persona p, Rol r) {
+		dr.removeRolPersona(p,r);
+	}
 
 }
