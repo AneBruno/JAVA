@@ -253,7 +253,7 @@ public class Menu {
 		}
 		else {
 			p.removeRol(r);
-			ctrlLogin.removeRolesPersona(p); //asigno rol en tabla rol_persona db
+			ctrlLogin.removeRolPersona(p,r); //asigno rol en tabla rol_persona db
 			System.out.println("Eliminación exitosa.");
 		}
 	}
@@ -267,12 +267,11 @@ public class Menu {
 			System.out.println("Persona inesxistente. Ingrese datos correctos: ");
 			p=find();
 		}
-		//roles= p.getRoles();
 		System.out.println("Desea eliminar la persona: ID:"+p.getId()+" -Nombre: "+p.getNombre()+" -Apellido: "+p.getApellido()+"? (si/no)");
 		String rta=s.nextLine();
 		if(rta.equals("si")) {
-			ctrlLogin.removeRolesPersona(p); //borra roles de la persona
-			ctrlLogin.deletePersona(p);
+			//ctrlLogin.removeRolesPersona(p); //sacar de aca. llamarlo en dataPersona
+			ctrlLogin.deletePersona(p); //borra roles primero y dps persona
 			System.out.println("Eliminación exitosa.");
 		}else if (rta.equals("no")) {
 			System.out.println("Eliminación cancelada.");

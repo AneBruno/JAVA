@@ -258,6 +258,8 @@ public class DataPersona {
 	}
 
 	public Persona deletePersona(Persona p) {
+		DataRol dr= new DataRol();
+		dr.removeRolesPersona(p);
 		PreparedStatement stmt= null;
 		ResultSet keyResultSet=null;
 		try {
