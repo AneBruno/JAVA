@@ -4,11 +4,12 @@ import java.sql.Date;
 
 public class Persona {
 	
-	private int idPersona, tipo;
+	private int idPersona;
 	private String tipoDoc;
 	private String nroDoc;
 	private String nombre, apellido, telefono, direccion, email, password, cuit;
 	private Date fechaIngreso, fechaRegistro;
+	private boolean cliente, empleado;
 	
 	public int getIdPersona() {
 		return idPersona;
@@ -82,12 +83,20 @@ public class Persona {
 	public void setFechaRegistro(Date fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
 	}
-	public int getTipo() {
-		return tipo;
+	
+	public boolean isCliente() {
+		return cliente;
 	}
-	public void setTipo(int tipo) {
-		this.tipo = tipo;
+	public void setCliente(boolean cliente) {
+		this.cliente = cliente;
 	}
+	public boolean isEmpleado() {
+		return empleado;
+	}
+	public void setEmpleado(boolean empleado) {
+		this.empleado = empleado;
+	}
+
 	
 	
 	 

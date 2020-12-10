@@ -4,7 +4,6 @@ public class LineaDePedido {
 
 	private int id_pedido,id_producto;
 	private int cantidad;
-	private Double precioUnitario;
 	
 	public int getCantidad() {
 		return cantidad;
@@ -12,12 +11,7 @@ public class LineaDePedido {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-	public Double getPrecioUnitario() {
-		return precioUnitario;
-	}
-	public void setPrecioUnitario(Double precioUnitario) {
-		this.precioUnitario = precioUnitario;
-	}
+
 	public int getId_pedido() {
 		return id_pedido;
 	}

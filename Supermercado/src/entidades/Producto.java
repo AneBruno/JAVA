@@ -8,6 +8,7 @@ public class Producto {
 	private int stockMinimo;
 	private String marca;
 	private int id_categoria;
+	private Double precio;
 	
 	
 	public int getIdProducto() {
@@ -45,6 +46,12 @@ public class Producto {
 	}
 	public void setId_categoria(int id_categoria) {
 		this.id_categoria = id_categoria;
+	}
+	public Double getPrecio() {
+		return precio;
+	}
+	public void setPrecio(Double precio) {
+		this.precio = precio;
 	}
 	
 	

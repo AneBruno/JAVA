@@ -5,7 +5,7 @@ import java.sql.Date;
 public class Descuento {
 
 	private int idDcto;
-	private Date fechaDctoFin, fechDctoInicio;
+	private Date fechaDctoFin, fechaDctoInicio;
 	private Double porcDcto;
 	
 	public int getIdDcto() {
@@ -20,11 +20,11 @@ public class Descuento {
 	public void setFechaDctoFin(Date fechaDctoFin) {
 		this.fechaDctoFin = fechaDctoFin;
 	}
-	public Date getFechDctoInicio() {
-		return fechDctoInicio;
+	public Date getFechaDctoInicio() {
+		return fechaDctoInicio;
 	}
-	public void setFechDctoInicio(Date fechDctoInicio) {
-		this.fechDctoInicio = fechDctoInicio;
+	public void setFechaDctoInicio(Date fechDctoInicio) {
+		this.fechaDctoInicio = fechDctoInicio;
 	}
 	public Double getPorcDcto() {
 		return porcDcto;
