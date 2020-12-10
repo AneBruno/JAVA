@@ -9,9 +9,9 @@ public class DbConnector {
 	private String driver="com.mysql.jdbc.Driver";
 	private String host="localhost";
 	private String port="3306";
-	private String user="java";
-	private String password="himitsu";
-	private String db="java";
+	private String user="root";
+	private String password="root";
+	private String db="tp_java";
 	private int conectados=0;
 	private Connection conn=null;
 	
@@ -34,7 +34,7 @@ public class DbConnector {
 		try {
 			if(conn==null || conn.isClosed()) {
 				//conn=DriverManager.getConnection("jdbc:mysql://"+host+":"+port+"/"+db, user, password);
-				conn=DriverManager.getConnection("jdbc:mysql://" + host + ":" + port + "/" + db + "?user=" + user + "&password=" + password + "&useSSL=false");
+				conn=DriverManager.getConnection("jdbc:mysql://" +host+":"+port+"/"+ db, user, password);
 				conectados=0;
 			}
 		} catch (SQLException e) {

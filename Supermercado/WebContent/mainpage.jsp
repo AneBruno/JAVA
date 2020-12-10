@@ -64,21 +64,16 @@
         <img class="img-fluid rounded mb-4 mb-lg-0" src="style/mainpage/6.jpg" alt="">
       </div>
       <!-- /.col-lg-8 -->
-      <div class="col-lg-5">
-        <h1 class="font-weight-light">Comprá desde la comodidad de tu casa</h1>
-        <p>Escribir algo aca</p>
-        <a class="btn btn-primary" href="#">Call to Action!</a>
+      <div class="col-lg-5 text-center" >
+        <h1 class="font-weight-light"><b>Ahora también podés comprar online.</b> </h1>
+        <p>La calidad de servicio de siempre, pero ahora desde la comodidad de tu casa. </p>
+       <!--  <a class="btn btn-primary" href="#">Call to Action!</a>  -->
       </div>
       <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
 
-    <!-- Call to Action Well -->
-    <div class="card text-white bg-secondary my-5 py-4 text-center">
-      <div class="card-body">
-        <p class="text-white m-0">This call to action card is a great place to showcase some important information or display a clever tagline!</p>
-      </div>
-    </div>
+   
 
     <!-- Content Row -->
     <div class="row">
