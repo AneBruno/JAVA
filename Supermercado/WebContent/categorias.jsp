@@ -12,11 +12,12 @@
   <meta name="description" content="">
   <meta name="author" content="">
   
-   <!-- Bootstrap core CSS -->
+  <!-- Bootstrap core CSS -->
   <link href="style/mainpage/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="style/mainpage/small-business.css" rel="stylesheet">
+  <link href="style/mainpage/modern-business.css" rel="stylesheet">
+  
   
 	<title>Categorías</title>
 
