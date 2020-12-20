@@ -10,12 +10,14 @@
   <link href="style/mainpage/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="style/mainpage/small-business.css" rel="stylesheet">
+  <link href="style/mainpage/modern-business.css" rel="stylesheet">
+  
+    <link href="style/login/login.css" rel="stylesheet">
   
 </head>
 <body>
 
-		   <!-- Navigation -->
+<!-- Navigation -->
 	  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	    <div class="container">
 	      <a class="navbar-brand" href="index.jsp">Supermercado</a>
@@ -26,7 +28,6 @@
 	        <ul class="navbar-nav ml-auto">
 	           <li class="nav-item">
 	            <a class="nav-link" href="login.jsp">Iniciar Sesión
-	              
 	            </a>
           	  </li>
 	          <li class="nav-item active">
@@ -39,5 +40,43 @@
 	    </div>
 	  </nav>
 	  
+	<div class="container-fluid">
+  <div class="row no-gutter">
+    <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+    <div class="col-md-8 col-lg-6">
+      <div class="login d-flex align-items-center py-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-9 col-lg-8 mx-auto ">
+              <h3 class="login-heading mb-4 text-center">Creá tu cuenta</h3>
+              
+              <form action="Registro" method="post">
+              
+                <div class="form-label-group">
+                  <input type="text" name="name" id="inputName" class="form-control" placeholder="Nombre" required >
+                  <label for="inputEmail">Nombre</label>
+                </div>
+                
+                <div class="form-label-group">
+                  <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Correo electrónico" required >
+                  <label for="inputEmail">Correo electrónico</label>
+                </div>
+
+                <div class="form-label-group">
+                  <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Contraseña" required>
+                  <label for="inputPassword">Contraseña</label>
+                </div>
+
+             
+                <button class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit">Ingresar</button>
+             
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>

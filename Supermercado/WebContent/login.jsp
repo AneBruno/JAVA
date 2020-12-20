@@ -20,7 +20,7 @@
 </head>
 <body>
 	 
-	   <!-- Navigation -->
+<!-- Navigation -->
 	  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
 	    <div class="container">
 	      <a class="navbar-brand" href="index.jsp">Supermercado</a>
@@ -55,12 +55,12 @@
               
               <form action="Inicio" method="post">
                 <div class="form-label-group">
-                  <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Ingrese correo" required >
+                  <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Correo electrónico" required >
                   <label for="inputEmail">Correo electrónico</label>
                 </div>
 
                 <div class="form-label-group">
-                  <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Ingrese contraseña" required>
+                  <input type="password" name="pass" id="inputPassword" class="form-control" placeholder="Contraseña" required>
                   <label for="inputPassword">Contraseña</label>
                 </div>
 
